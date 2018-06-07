@@ -36,15 +36,17 @@ type tProps = {
   },
 }
 
-export default class MegaMenu extends React.Component<
-  tProps,
-  {
-    subMenuStatuses: any,
-  },
-> {
+type tState = {
+  subMenuStatuses: any,
+}
+
+export default class MegaMenu extends React.Component<tProps, tState> {
   containerRef: any
   xSpacing = 15
   ySpacing = 15
+  state = {
+    subMenuStatuses: {},
+  }
   constructor(props: tProps) {
     super(props)
 
@@ -52,15 +54,20 @@ export default class MegaMenu extends React.Component<
 
     this.xSpacing = props.options.xSpacing || this.xSpacing
     this.ySpacing = props.options.ySpacing || this.ySpacing
-
-    this.state = {
-      subMenuStatuses: {
-        ...props.options.items.reduce(
-          (obj, item) => Object.assign(obj, { [item.id]: false }),
-          {},
-        ),
-      },
+  }
+  getSnapshotBeforeUpdate(prevProps: tProps, prevState: tState) {
+    if (prevProps !== this.props) {
+      this.setState({
+        ...prevState,
+        subMenuStatuses: {
+          ...this.props.options.items.reduce(
+            (obj, item) => Object.assign(obj, { [item.id]: false }),
+            {},
+          ),
+        },
+      })
     }
+    return { prevProps, prevState }
   }
   componentDidMount() {
     if (typeof document !== 'undefined') {
@@ -85,7 +92,7 @@ export default class MegaMenu extends React.Component<
       const subMenuStatuses = {}
 
       for (let key in prevState.subMenuStatuses) {
-        if (key !== itemId) {
+        if (key != itemId) {
           subMenuStatuses[key] = false
         } else {
           subMenuStatuses[key] = !prevState.subMenuStatuses[key]

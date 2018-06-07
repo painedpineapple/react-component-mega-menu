@@ -31,8 +31,9 @@ export default function Item({
     return (
       <Fragment>
         <button
-          className={`item-has-children ${arrowWithButton &&
-            'button-has-icon'}`}
+          className={`item-has-children ${
+            arrowWithButton ? 'button-has-icon' : ''
+          }`}
           onClick={() => toggleSubMenu(item.id)}
         >
           {item.title}
