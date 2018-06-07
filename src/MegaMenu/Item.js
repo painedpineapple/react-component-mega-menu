@@ -16,7 +16,9 @@ export default function Item({
   if (item.url && item.items.length) {
     return (
       <Fragment>
-        <a href={item.url}>{item.title}</a>
+        <a href={item.url} className="item-has-children">
+          {item.title}
+        </a>
         <button onClick={() => toggleSubMenu(item.id)}>
           <ChevronDown />
         </button>
@@ -26,7 +28,12 @@ export default function Item({
   } else if (!item.url && item.items.length) {
     return (
       <Fragment>
-        <button onClick={() => toggleSubMenu(item.id)}>{item.title}</button>
+        <button
+          className="item-has-children"
+          onClick={() => toggleSubMenu(item.id)}
+        >
+          {item.title}
+        </button>
         {subMenuActive && <SubItem />}
       </Fragment>
     )

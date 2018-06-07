@@ -8,7 +8,11 @@ export default class SubItem extends React.Component<tSubItem> {
   render() {
     return (
       <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} native>
-        {styles => <animated.div style={styles}>SubItem</animated.div>}
+        {styles => (
+          <animated.div style={styles} className="subitem">
+            SubItem
+          </animated.div>
+        )}
       </Spring>
     )
   }
