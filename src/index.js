@@ -17,11 +17,11 @@ while (count > 0) {
   menuItems.push({
     id: faker.random.uuid(),
     title: faker.lorem.word(),
-    url: count % 2 ? '' : faker.internet.url(),
-    sections: _.times(faker.random.number(5), () => ({
+    url: count % 3 ? '' : faker.internet.url(),
+    items: _.times(faker.random.number(5), () => ({
       id: faker.random.uuid(),
       title: faker.lorem.word(),
-      url: count % 2 ? '' : faker.internet.url(),
+      url: count % 3 ? '' : faker.internet.url(),
       items: _.times(faker.random.number(8), () => ({
         id: faker.random.uuid(),
         title: faker.lorem.word(),
