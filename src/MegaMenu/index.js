@@ -26,17 +26,26 @@ export type tItem = {
   items?: Array<tSubItem>,
 }
 
-export default class MegaMenu extends React.Component<{
+type tProps = {
   options: {
     items: Array<tItem>,
     arrowWithButton?: boolean,
     xSpacing?: number,
     ySpacing?: number,
+    styles?: {},
   },
-}> {
+}
+
+export default class MegaMenu extends React.Component<
+  tProps,
+  {
+    subMenuStatuses: any,
+  },
+> {
+  containerRef: any
   xSpacing = 15
   ySpacing = 15
-  constructor(props: Array<tItem>) {
+  constructor(props: tProps) {
     super(props)
 
     this.containerRef = React.createRef()
@@ -63,14 +72,15 @@ export default class MegaMenu extends React.Component<{
       document.removeEventListener('click', this.outsideClickListener)
     }
   }
-  outsideClickListener = event => {
+  outsideClickListener = (event: any) => {
     if (
+      // $FlowFixMe
       !ReactDOM.findDOMNode(this.containerRef.current).contains(event.target)
     ) {
       this.toggleSubMenu('')
     }
   }
-  toggleSubMenu = itemId => {
+  toggleSubMenu = (itemId: string) => {
     this.setState(prevState => {
       const subMenuStatuses = {}
 

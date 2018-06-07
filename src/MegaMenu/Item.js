@@ -15,7 +15,7 @@ export default function Item({
   subMenuActive: boolean,
   arrowWithButton: boolean,
 }) {
-  if (item.url && item.items.length) {
+  if (item.url && item.items && item.items.length) {
     return (
       <Fragment>
         <a href={item.url} className="item-has-children">
@@ -27,7 +27,7 @@ export default function Item({
         {subMenuActive && <SubItemsList items={item.items} />}
       </Fragment>
     )
-  } else if (!item.url && item.items.length) {
+  } else if (!item.url && item.items && item.items.length) {
     return (
       <Fragment>
         <button

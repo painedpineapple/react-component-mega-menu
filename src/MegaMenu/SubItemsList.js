@@ -20,7 +20,7 @@ export default function SubItemsList({ items }): { items: Array<tSubItem> } {
 
 function SubItem({ item }): { item: tSubItem } {
   const { title, url, items } = item
-  if (url && items.length) {
+  if (url && items && items.length) {
     return (
       <div className="subitem-section link-and-items">
         <a href={url} className="section-title">
@@ -35,7 +35,7 @@ function SubItem({ item }): { item: tSubItem } {
         </ul>
       </div>
     )
-  } else if (!url && items.length) {
+  } else if (!url && items && items.length) {
     return (
       <div className="subitem-section items-only">
         <span className="section-title">{title}</span>
