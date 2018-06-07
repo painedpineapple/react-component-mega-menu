@@ -71,12 +71,22 @@ export default styled('nav')(({ options: o }) => ({
       display: 'flex',
       flexDirection: 'column',
       fontSize: 16,
+
+      a: {
+        '&, &:hover, &:focus': {
+          textDecoration: 'none',
+        },
+      },
     },
   },
 
   '.section-title': {
     fontSize: 18,
     marginBottom: o.ySpacing,
+
+    '&, &:active, &:hover': {
+      textDecoration: 'none',
+    },
   },
 
   ...o.styles,
