@@ -8,29 +8,24 @@ import MegaMenu from './MegaMenu'
 const styles = {
   fontFamily: 'sans-serif',
   textAlign: 'center',
+  maxWidth: '100%',
 }
 
-let menuItems = []
-let count = 6
-
-while (count > 0) {
-  menuItems.push({
+let menuItems = _.times(6, count => ({
+  id: faker.random.uuid(),
+  title: faker.lorem.word(),
+  url: count % 2 ? '' : faker.internet.url(),
+  items: _.times(faker.random.number(8), () => ({
     id: faker.random.uuid(),
     title: faker.lorem.word(),
-    url: count % 2 ? '' : faker.internet.url(),
-    items: _.times(faker.random.number(5), () => ({
+    url: count % 3 ? '' : faker.internet.url(),
+    items: _.times(faker.random.number(8), () => ({
       id: faker.random.uuid(),
       title: faker.lorem.word(),
-      url: count % 3 ? '' : faker.internet.url(),
-      items: _.times(faker.random.number(8), () => ({
-        id: faker.random.uuid(),
-        title: faker.lorem.word(),
-        url: faker.internet.url(),
-      })),
+      url: faker.internet.url(),
     })),
-  })
-  count -= 1
-}
+  })),
+}))
 
 const menuStyles = {}
 

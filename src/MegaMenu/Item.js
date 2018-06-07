@@ -8,10 +8,12 @@ export default function Item({
   item,
   subMenuActive,
   toggleSubMenu,
+  arrows,
 }: {
   ...tItem,
   toggleSubMenu: (itemId: string) => void,
   subMenuActive: boolean,
+  arrows: 'always' | 'never' | 'only-no-link',
 }) {
   if (item.url && item.items.length) {
     return (
@@ -22,19 +24,24 @@ export default function Item({
         <button onClick={() => toggleSubMenu(item.id)}>
           <ChevronDown />
         </button>
-        {subMenuActive && <SubItem />}
+        {subMenuActive && <SubItem items={item.items} />}
       </Fragment>
     )
   } else if (!item.url && item.items.length) {
     return (
       <Fragment>
         <button
-          className="item-has-children"
+          className={`item-has-children ${(arrows === 'always' ||
+            arrows === 'only-without-link') &&
+            'button-has-icon'}`}
           onClick={() => toggleSubMenu(item.id)}
         >
           {item.title}
+          {(arrows === 'always' || arrows === 'only-without-link') && (
+            <ChevronDown />
+          )}
         </button>
-        {subMenuActive && <SubItem />}
+        {subMenuActive && <SubItem items={item.items} />}
       </Fragment>
     )
   } else {

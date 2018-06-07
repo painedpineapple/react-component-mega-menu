@@ -5,11 +5,12 @@ export default styled('nav')(({ options: o }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   position: 'relative',
+  width: '100%',
 
   '.lvl1-wrapper': {
     '> a, > button': {
       fontSize: 16,
-      padding: 15,
+      padding: `${o.ySpacing}px ${o.xSpacing}px`,
 
       '&, &:hover, &:focus': {
         textDecoration: 'none',
@@ -18,6 +19,8 @@ export default styled('nav')(({ options: o }) => ({
 
     'a.item-has-children': {
       paddingRight: 0,
+
+      '+ button svg': {},
     },
   },
 
@@ -25,6 +28,12 @@ export default styled('nav')(({ options: o }) => ({
     border: 'none',
     cursor: 'pointer',
     background: 'rgba(0,0,0,0)',
+
+    '&.button-has-icon': {
+      svg: {
+        paddingLeft: o.xSpacing,
+      },
+    },
 
     '&:focus': {
       outline: 'none',
@@ -35,10 +44,11 @@ export default styled('nav')(({ options: o }) => ({
     position: 'absolute',
     backgroundColor: '#fff',
     border: '1px solid #ccc',
-    width: 'calc(100% - 2px)',
+    width: 'calc(100% - 60px)',
     left: 0,
     right: 0,
     margin: 'auto',
+    padding: `${o.ySpacing}px ${o.ySpacing * 2}px`,
   },
 
   ...o.styles,

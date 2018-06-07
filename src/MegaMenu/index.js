@@ -25,9 +25,23 @@ export type tItem = {
   items?: Array<tSubItem>,
 }
 
-export default class MegaMenu extends React.Component<Array<tItem>> {
+export default class MegaMenu extends React.Component<{
+  options: {
+    items: Array<tItem>,
+    arrows?: 'always' | 'only-without-link',
+    xSpacing?: number,
+    ySpacing?: number,
+  },
+}> {
+  arrows = 'only-without-link'
+  xSpacing = 15
+  ySpacing = 15
   constructor(props: Array<tItem>) {
     super(props)
+
+    this.arrows = props.options.arrows || this.arrows
+    this.horizontalSpacing = props.options.xSpacing || this.xSpacing
+    this.horizontalSpacing = props.options.ySpacing || this.ySpacing
 
     this.state = {
       subMenuStatuses: {
@@ -57,7 +71,6 @@ export default class MegaMenu extends React.Component<Array<tItem>> {
     })
   }
   render() {
-    console.log(this.state.subMenuStatuses)
     let { options: opts, ...props } = this.props
     const { items, ...options } = opts
     return (
@@ -67,6 +80,8 @@ export default class MegaMenu extends React.Component<Array<tItem>> {
             style={styles}
             options={{
               ...options,
+              xSpacing: this.xSpacing,
+              ySpacing: this.ySpacing,
               styles: options.styles || {},
             }}
             {...props}
@@ -79,6 +94,7 @@ export default class MegaMenu extends React.Component<Array<tItem>> {
               {items.map(item => styles => (
                 <span className="lvl1-wrapper" style={styles}>
                   <Item
+                    arrows={this.arrows}
                     item={item}
                     key={item.id}
                     toggleSubMenu={this.toggleSubMenu}
