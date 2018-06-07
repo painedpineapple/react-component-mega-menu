@@ -30,6 +30,9 @@ export default styled('nav')(({ options: o }) => ({
     background: 'rgba(0,0,0,0)',
 
     '&.button-has-icon': {
+      display: 'flex',
+      alignItems: 'center',
+
       svg: {
         paddingLeft: o.xSpacing,
       },

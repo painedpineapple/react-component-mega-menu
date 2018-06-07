@@ -28,18 +28,16 @@ export type tItem = {
 export default class MegaMenu extends React.Component<{
   options: {
     items: Array<tItem>,
-    arrows?: 'always' | 'only-without-link',
+    arrowWithButton?: boolean,
     xSpacing?: number,
     ySpacing?: number,
   },
 }> {
-  arrows = 'only-without-link'
   xSpacing = 15
   ySpacing = 15
   constructor(props: Array<tItem>) {
     super(props)
 
-    this.arrows = props.options.arrows || this.arrows
     this.horizontalSpacing = props.options.xSpacing || this.xSpacing
     this.horizontalSpacing = props.options.ySpacing || this.ySpacing
 
@@ -72,7 +70,7 @@ export default class MegaMenu extends React.Component<{
   }
   render() {
     let { options: opts, ...props } = this.props
-    const { items, ...options } = opts
+    const { items, arrowWithButton, ...options } = opts
     return (
       <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} native>
         {styles => (
@@ -94,7 +92,7 @@ export default class MegaMenu extends React.Component<{
               {items.map(item => styles => (
                 <span className="lvl1-wrapper" style={styles}>
                   <Item
-                    arrows={this.arrows}
+                    arrowWithButton={arrowWithButton || false}
                     item={item}
                     key={item.id}
                     toggleSubMenu={this.toggleSubMenu}

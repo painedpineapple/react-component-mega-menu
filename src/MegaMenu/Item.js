@@ -1,19 +1,19 @@
 import React, { Fragment } from 'react'
 //
 import ChevronDown from './ChevronDown'
-import SubItem from './SubItem'
+import SubItemsList from './SubItemsList'
 import type { tItem } from './'
 
 export default function Item({
   item,
   subMenuActive,
   toggleSubMenu,
-  arrows,
+  arrowWithButton,
 }: {
   ...tItem,
   toggleSubMenu: (itemId: string) => void,
   subMenuActive: boolean,
-  arrows: 'always' | 'never' | 'only-no-link',
+  arrowWithButton: boolean,
 }) {
   if (item.url && item.items.length) {
     return (
@@ -24,24 +24,21 @@ export default function Item({
         <button onClick={() => toggleSubMenu(item.id)}>
           <ChevronDown />
         </button>
-        {subMenuActive && <SubItem items={item.items} />}
+        {subMenuActive && <SubItemsList items={item.items} />}
       </Fragment>
     )
   } else if (!item.url && item.items.length) {
     return (
       <Fragment>
         <button
-          className={`item-has-children ${(arrows === 'always' ||
-            arrows === 'only-without-link') &&
+          className={`item-has-children ${arrowWithButton &&
             'button-has-icon'}`}
           onClick={() => toggleSubMenu(item.id)}
         >
           {item.title}
-          {(arrows === 'always' || arrows === 'only-without-link') && (
-            <ChevronDown />
-          )}
+          {arrowWithButton && <ChevronDown />}
         </button>
-        {subMenuActive && <SubItem items={item.items} />}
+        {subMenuActive && <SubItemsList items={item.items} />}
       </Fragment>
     )
   } else {
