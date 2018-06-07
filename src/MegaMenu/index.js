@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Spring, animated, Trail } from 'react-spring'
 //
 import Container from './index.style'
@@ -38,8 +39,10 @@ export default class MegaMenu extends React.Component<{
   constructor(props: Array<tItem>) {
     super(props)
 
-    this.horizontalSpacing = props.options.xSpacing || this.xSpacing
-    this.horizontalSpacing = props.options.ySpacing || this.ySpacing
+    this.containerRef = React.createRef()
+
+    this.xSpacing = props.options.xSpacing || this.xSpacing
+    this.ySpacing = props.options.ySpacing || this.ySpacing
 
     this.state = {
       subMenuStatuses: {
@@ -48,6 +51,23 @@ export default class MegaMenu extends React.Component<{
           {},
         ),
       },
+    }
+  }
+  componentDidMount() {
+    if (typeof document !== 'undefined') {
+      document.addEventListener('click', this.outsideClickListener)
+    }
+  }
+  componentWillUnmount() {
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('click', this.outsideClickListener)
+    }
+  }
+  outsideClickListener = event => {
+    if (
+      !ReactDOM.findDOMNode(this.containerRef.current).contains(event.target)
+    ) {
+      this.toggleSubMenu('')
     }
   }
   toggleSubMenu = itemId => {
@@ -75,6 +95,7 @@ export default class MegaMenu extends React.Component<{
       <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} native>
         {styles => (
           <AnimatedContainer
+            ref={this.containerRef}
             style={styles}
             options={{
               ...options,

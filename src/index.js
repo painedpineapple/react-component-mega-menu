@@ -33,6 +33,8 @@ const App = () => (
   <div style={styles}>
     <MegaMenu
       options={{
+        //         ySpacing: 40,
+        //         xSpacing: 0,
         arrowWithButton: true,
         items: menuItems,
         styles: menuStyles,
