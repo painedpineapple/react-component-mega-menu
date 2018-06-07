@@ -50,24 +50,19 @@ export default class MegaMenu extends React.Component<tProps, tState> {
   constructor(props: tProps) {
     super(props)
 
+    this.state = {
+      subMenuStatuses: {
+        ...this.props.options.items.reduce(
+          (obj, item) => Object.assign(obj, { [item.id]: false }),
+          {},
+        ),
+      },
+    }
+
     this.containerRef = React.createRef()
 
     this.xSpacing = props.options.xSpacing || this.xSpacing
     this.ySpacing = props.options.ySpacing || this.ySpacing
-  }
-  getSnapshotBeforeUpdate(prevProps: tProps, prevState: tState) {
-    if (prevProps !== this.props) {
-      this.setState({
-        ...prevState,
-        subMenuStatuses: {
-          ...this.props.options.items.reduce(
-            (obj, item) => Object.assign(obj, { [item.id]: false }),
-            {},
-          ),
-        },
-      })
-    }
-    return { prevProps, prevState }
   }
   componentDidMount() {
     if (typeof document !== 'undefined') {

@@ -28,9 +28,9 @@ function SubItem({ item }): { item: tSubItem } {
         </a>
         <ul>
           {items.map(subItem => (
-            <a key={subItem.id} href={subItem.url}>
-              {subItem.title}
-            </a>
+            <li key={subItem.id}>
+              <a href={subItem.url}>{subItem.title}</a>
+            </li>
           ))}
         </ul>
       </div>
@@ -41,9 +41,9 @@ function SubItem({ item }): { item: tSubItem } {
         <span className="section-title">{title}</span>
         <ul>
           {items.map(subItem => (
-            <a key={subItem.id} href={subItem.url}>
-              {subItem.title}
-            </a>
+            <li key={subItem.id}>
+              <a href={subItem.url}>{subItem.title}</a>
+            </li>
           ))}
         </ul>
       </div>

@@ -6,8 +6,11 @@ export default styled('nav')(({ options: o }) => ({
   justifyContent: 'center',
   position: 'relative',
   width: '100%',
+  zIndex: 999,
 
   '.lvl1-wrapper': {
+    display: 'flex',
+    alignItems: 'center',
     '> a, > button': {
       fontSize: 16,
       padding: `${o.ySpacing}px ${o.xSpacing}px`,
@@ -20,7 +23,7 @@ export default styled('nav')(({ options: o }) => ({
     'a.item-has-children': {
       paddingRight: 0,
 
-      '+ button svg': {},
+      '+ button': {},
     },
   },
 
@@ -48,6 +51,8 @@ export default styled('nav')(({ options: o }) => ({
     backgroundColor: '#fff',
     border: '1px solid #ccc',
     width: 'calc(100% - 60px)',
+    bottom: 0,
+    transform: 'translateY(100%)',
     left: 0,
     right: 0,
     margin: 'auto',
