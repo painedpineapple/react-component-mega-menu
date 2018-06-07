@@ -51,7 +51,32 @@ export default styled('nav')(({ options: o }) => ({
     left: 0,
     right: 0,
     margin: 'auto',
-    padding: `${o.ySpacing}px ${o.ySpacing * 2}px`,
+    padding: `${o.ySpacing}px ${o.ySpacing * 2}px 0`,
+  },
+
+  '.subitem-inner': {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+
+  '.subitem-section': {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: `0 ${o.xSpacing}px ${o.ySpacing}px`,
+    textAlign: 'left',
+
+    ul: {
+      padding: 0,
+      margin: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      fontSize: 16,
+    },
+  },
+
+  '.section-title': {
+    fontSize: 18,
+    marginBottom: o.ySpacing,
   },
 
   ...o.styles,
