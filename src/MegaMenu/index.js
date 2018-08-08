@@ -1,58 +1,54 @@
-// @flow
 import React from "react";
 import ReactDOM from "react-dom";
 import { Spring, animated, Trail } from "react-spring";
+import PropTypes from "prop-types";
 //
 import { Wrapper } from "./index.style";
 import { Item } from "./Item";
 
 const AnimatedWrapper = animated(Wrapper);
 
-export type tSubItem = {
-  id: string | number,
-  title: string,
-  url?: string,
-  items?: Array<{
-    id: string | number,
-    title: string,
-    url: string
-  }>
-};
+export const tSubItem = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      title: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired
+    }).isRequired
+  )
+}).isRequired;
 
-export type tItem = {
-  id: string | number,
-  title: string,
-  url?: string,
-  items?: Array<tSubItem>
-};
+export const tItem = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(tSubItem)
+}).isRequired;
 
-type tProps = {
-  options: {
-    items: Array<tItem>,
-    arrowWithButton?: boolean,
-    xSpacing?: number,
-    ySpacing?: number,
-    styles?: {}
-  }
-};
-
-type tState = {
-  subMenuStatuses: any
-};
-
-export class MegaMenu extends React.Component<tProps, tState> {
+export class MegaMenu extends React.Component {
+  static propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.shape({}),
+    arrowWithButton: PropTypes.bool,
+    xSpacing: PropTypes.number,
+    ySpacing: PropTypes.number,
+    items: PropTypes.arrayOf(tItem).isRequired
+  };
   containerRef: any;
   xSpacing = 15;
   ySpacing = 15;
   state = {
     subMenuStatuses: {}
   };
-  constructor(props: tProps) {
+  constructor(props) {
     super(props);
 
     this.state = {
       subMenuStatuses: {
-        ...this.props.options.items.reduce(
+        ...this.props.items.reduce(
           (obj, item) => Object.assign(obj, { [item.id]: false }),
           {}
         )
@@ -61,8 +57,8 @@ export class MegaMenu extends React.Component<tProps, tState> {
 
     this.containerRef = React.createRef();
 
-    this.xSpacing = props.options.xSpacing || this.xSpacing;
-    this.ySpacing = props.options.ySpacing || this.ySpacing;
+    this.xSpacing = props.xSpacing || this.xSpacing;
+    this.ySpacing = props.ySpacing || this.ySpacing;
   }
   componentDidMount() {
     if (typeof document !== "undefined") {
@@ -74,7 +70,7 @@ export class MegaMenu extends React.Component<tProps, tState> {
       document.removeEventListener("click", this.outsideClickListener);
     }
   }
-  outsideClickListener = (event: any) => {
+  outsideClickListener = event => {
     if (
       // $FlowFixMe
       !ReactDOM.findDOMNode(this.containerRef.current).contains(event.target)
@@ -82,7 +78,7 @@ export class MegaMenu extends React.Component<tProps, tState> {
       this.toggleSubMenu("");
     }
   };
-  toggleSubMenu = (itemId: string) => {
+  toggleSubMenu = itemId => {
     this.setState(prevState => {
       const subMenuStatuses = {};
 
@@ -101,19 +97,17 @@ export class MegaMenu extends React.Component<tProps, tState> {
     });
   };
   render() {
-    let { options: opts, ...props } = this.props;
-    const { items, arrowWithButton, ...options } = opts;
+    let { arrowWithButton, style, className, items, ...props } = this.props;
     return (
       <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} native>
         {styles => (
           <AnimatedWrapper
             ref={this.containerRef}
-            style={styles}
+            style={style}
+            className={className}
             options={{
-              ...options,
               xSpacing: this.xSpacing,
-              ySpacing: this.ySpacing,
-              styles: options.styles || {}
+              ySpacing: this.ySpacing
             }}
             {...props}
           >

@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import faker from "faker";
 import _ from "lodash";
+import { css } from "react-emotion";
 //
 import { MegaMenu } from "./MegaMenu";
 
@@ -27,17 +28,17 @@ let menuItems = _.times(6, count => ({
   }))
 }));
 
-const menuStyles = {};
+const megaMenuClassName = css``;
 
 const App = () => (
   <div style={styles}>
     <MegaMenu
-      options={{
+      {...{
         //         ySpacing: 40,
         //         xSpacing: 0,
         arrowWithButton: true,
         items: menuItems,
-        styles: menuStyles
+        className: megaMenuClassName
       }}
     />
   </div>
