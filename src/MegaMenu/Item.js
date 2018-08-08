@@ -1,20 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from "react";
 //
-import ChevronDown from './ChevronDown'
-import SubItemsList from './SubItemsList'
-import type { tItem } from './'
+import { ChevronDown } from "./ChevronDown";
+import { SubItemsList } from "./SubItemsList";
+import type { tItem } from "./";
 
-export default function Item({
+export const Item = ({
   item,
   subMenuActive,
   toggleSubMenu,
-  arrowWithButton,
+  arrowWithButton
 }: {
   ...tItem,
   toggleSubMenu: (itemId: string) => void,
   subMenuActive: boolean,
-  arrowWithButton: boolean,
-}) {
+  arrowWithButton: boolean
+}) => {
   if (item.url && item.items && item.items.length) {
     return (
       <Fragment>
@@ -26,13 +26,13 @@ export default function Item({
         </button>
         {subMenuActive && <SubItemsList items={item.items} />}
       </Fragment>
-    )
+    );
   } else if (!item.url && item.items && item.items.length) {
     return (
       <Fragment>
         <button
           className={`item-has-children ${
-            arrowWithButton ? 'button-has-icon' : ''
+            arrowWithButton ? "button-has-icon" : ""
           }`}
           onClick={() => toggleSubMenu(item.id)}
         >
@@ -41,8 +41,8 @@ export default function Item({
         </button>
         {subMenuActive && <SubItemsList items={item.items} />}
       </Fragment>
-    )
+    );
   } else {
-    return <a href={item.url}>{item.title}</a>
+    return <a href={item.url}>{item.title}</a>;
   }
-}
+};

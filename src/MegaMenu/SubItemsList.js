@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
-import { Spring, animated } from 'react-spring'
+import React, { Fragment } from "react";
+import { Spring, animated } from "react-spring";
 //
-import ChevronDown from './ChevronDown'
-import type { tSubItem } from './'
+import { ChevronDown } from "./ChevronDown";
+import type { tSubItem } from "./";
 
-export default function SubItemsList({ items }): { items: Array<tSubItem> } {
+export const SubItemsList = ({ items }): { items: Array<tSubItem> } => {
   return (
     <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} native>
       {styles => (
@@ -15,11 +15,11 @@ export default function SubItemsList({ items }): { items: Array<tSubItem> } {
         </animated.div>
       )}
     </Spring>
-  )
-}
+  );
+};
 
-function SubItem({ item }): { item: tSubItem } {
-  const { title, url, items } = item
+const SubItem = ({ item }): { item: tSubItem } => {
+  const { title, url, items } = item;
   if (url && items && items.length) {
     return (
       <div className="subitem-section link-and-items">
@@ -34,7 +34,7 @@ function SubItem({ item }): { item: tSubItem } {
           ))}
         </ul>
       </div>
-    )
+    );
   } else if (!url && items && items.length) {
     return (
       <div className="subitem-section items-only">
@@ -47,7 +47,7 @@ function SubItem({ item }): { item: tSubItem } {
           ))}
         </ul>
       </div>
-    )
+    );
   } else {
     return (
       <div className="subitem-section link-only">
@@ -55,6 +55,6 @@ function SubItem({ item }): { item: tSubItem } {
           {title}
         </a>
       </div>
-    )
+    );
   }
-}
+};

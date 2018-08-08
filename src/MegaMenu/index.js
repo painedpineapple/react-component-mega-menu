@@ -1,12 +1,12 @@
 // @flow
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Spring, animated, Trail } from 'react-spring'
+import React from "react";
+import ReactDOM from "react-dom";
+import { Spring, animated, Trail } from "react-spring";
 //
-import Container from './index.style'
-import Item from './Item'
+import { Wrapper } from "./index.style";
+import { Item } from "./Item";
 
-const AnimatedContainer = animated(Container)
+const AnimatedWrapper = animated(Wrapper);
 
 export type tSubItem = {
   id: string | number,
@@ -15,16 +15,16 @@ export type tSubItem = {
   items?: Array<{
     id: string | number,
     title: string,
-    url: string,
-  }>,
-}
+    url: string
+  }>
+};
 
 export type tItem = {
   id: string | number,
   title: string,
   url?: string,
-  items?: Array<tSubItem>,
-}
+  items?: Array<tSubItem>
+};
 
 type tProps = {
   options: {
@@ -32,46 +32,46 @@ type tProps = {
     arrowWithButton?: boolean,
     xSpacing?: number,
     ySpacing?: number,
-    styles?: {},
-  },
-}
+    styles?: {}
+  }
+};
 
 type tState = {
-  subMenuStatuses: any,
-}
+  subMenuStatuses: any
+};
 
-export default class MegaMenu extends React.Component<tProps, tState> {
-  containerRef: any
-  xSpacing = 15
-  ySpacing = 15
+export class MegaMenu extends React.Component<tProps, tState> {
+  containerRef: any;
+  xSpacing = 15;
+  ySpacing = 15;
   state = {
-    subMenuStatuses: {},
-  }
+    subMenuStatuses: {}
+  };
   constructor(props: tProps) {
-    super(props)
+    super(props);
 
     this.state = {
       subMenuStatuses: {
         ...this.props.options.items.reduce(
           (obj, item) => Object.assign(obj, { [item.id]: false }),
-          {},
-        ),
-      },
-    }
+          {}
+        )
+      }
+    };
 
-    this.containerRef = React.createRef()
+    this.containerRef = React.createRef();
 
-    this.xSpacing = props.options.xSpacing || this.xSpacing
-    this.ySpacing = props.options.ySpacing || this.ySpacing
+    this.xSpacing = props.options.xSpacing || this.xSpacing;
+    this.ySpacing = props.options.ySpacing || this.ySpacing;
   }
   componentDidMount() {
-    if (typeof document !== 'undefined') {
-      document.addEventListener('click', this.outsideClickListener)
+    if (typeof document !== "undefined") {
+      document.addEventListener("click", this.outsideClickListener);
     }
   }
   componentWillUnmount() {
-    if (typeof document !== 'undefined') {
-      document.removeEventListener('click', this.outsideClickListener)
+    if (typeof document !== "undefined") {
+      document.removeEventListener("click", this.outsideClickListener);
     }
   }
   outsideClickListener = (event: any) => {
@@ -79,41 +79,41 @@ export default class MegaMenu extends React.Component<tProps, tState> {
       // $FlowFixMe
       !ReactDOM.findDOMNode(this.containerRef.current).contains(event.target)
     ) {
-      this.toggleSubMenu('')
+      this.toggleSubMenu("");
     }
-  }
+  };
   toggleSubMenu = (itemId: string) => {
     this.setState(prevState => {
-      const subMenuStatuses = {}
+      const subMenuStatuses = {};
 
       for (let key in prevState.subMenuStatuses) {
         if (key != itemId) {
-          subMenuStatuses[key] = false
+          subMenuStatuses[key] = false;
         } else {
-          subMenuStatuses[key] = !prevState.subMenuStatuses[key]
+          subMenuStatuses[key] = !prevState.subMenuStatuses[key];
         }
       }
 
       return {
         ...prevState,
-        subMenuStatuses,
-      }
-    })
-  }
+        subMenuStatuses
+      };
+    });
+  };
   render() {
-    let { options: opts, ...props } = this.props
-    const { items, arrowWithButton, ...options } = opts
+    let { options: opts, ...props } = this.props;
+    const { items, arrowWithButton, ...options } = opts;
     return (
       <Spring from={{ opacity: 0 }} to={{ opacity: 1 }} native>
         {styles => (
-          <AnimatedContainer
+          <AnimatedWrapper
             ref={this.containerRef}
             style={styles}
             options={{
               ...options,
               xSpacing: this.xSpacing,
               ySpacing: this.ySpacing,
-              styles: options.styles || {},
+              styles: options.styles || {}
             }}
             {...props}
           >
@@ -134,9 +134,9 @@ export default class MegaMenu extends React.Component<tProps, tState> {
                 </span>
               ))}
             </Trail>
-          </AnimatedContainer>
+          </AnimatedWrapper>
         )}
       </Spring>
-    )
+    );
   }
 }

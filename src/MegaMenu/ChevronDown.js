@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-export default function ChevronDown() {
+export const ChevronDown = () => {
   return (
     <svg width="10" height="10" version="1.1" viewBox="0 0 24 24">
       <path
@@ -9,5 +9,5 @@ export default function ChevronDown() {
         fill="#000"
       />
     </svg>
-  )
-}
+  );
+};
