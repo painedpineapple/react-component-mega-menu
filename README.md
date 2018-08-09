@@ -1,1 +1,1 @@
-CodeSandbox: https://codesandbox.io/s/pkpv7p1nw0
+This is deprected, please refer to https://github.com/SeaMonster-Studios/react-components.
